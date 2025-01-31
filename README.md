@@ -14,6 +14,7 @@ pnpm run dev
 ### Frameworks and tools
 
 - React (version 18)
+- React Router
 - Tailwindcss (version 3)
 - vite
 - Typescript
