@@ -14,6 +14,7 @@ import ContactLayout from "./layout/ContactLayout";
 import ContactInfo from "./components/ContactInfo";
 import ContactForm from "./components/ContactForm";
 import NotFound from "./components/NotFound";
+import ProductDetails from "./pages/ProductDetails";
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -21,6 +22,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="product" element={<Product />} />
+        <Route path="product/:id" element={<ProductDetails />} />
         <Route path="signin" element={<Signin />} />
 
         {/* Nested Route */}
