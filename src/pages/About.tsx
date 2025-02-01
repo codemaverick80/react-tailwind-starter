@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { getUserInfo } from "../api/api";
+import useAxiosFetch from "../hooks/useAxiosFetch";
 
 const About = () => {
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      const resp = await getUserInfo(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      setUsers(resp);
-    }
-    fetchData();
-  }, []);
+  const { data, fetchError, isLoading } = useAxiosFetch(
+    "https://jsonplaceholder.typicode.com/users"
+  );
 
-  //console.log(users);
+  useEffect(() => {
+    setUsers(data);
+  }, [data]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const resp = await getUserInfo(
+  //       "https://jsonplaceholder.typicode.com/users"
+  //     );
+  //     setUsers(resp);
+  //   }
+  //   fetchData();
+  // }, []);
+
   return (
     <div>
       <header className="shadow-sm">
@@ -23,12 +31,19 @@ const About = () => {
         </div>
       </header>
       {/* <h1 className="text-2xl font-bold">About Page</h1> */}
+
       <div>
-        <ul>
-          {users.map((data, ind) => {
-            return <li key={ind}>{data?.name}</li>;
-          })}
-        </ul>
+        {isLoading && <p>Loading users...</p>}
+        {!isLoading && fetchError && (
+          <p className="text-red-500">{fetchError}</p>
+        )}
+        {!isLoading && !fetchError && (
+          <ul>
+            {users.map((data, ind) => {
+              return <li key={ind}>{data?.name}</li>;
+            })}
+          </ul>
+        )}
       </div>
     </div>
   );

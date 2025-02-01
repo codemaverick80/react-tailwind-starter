@@ -1,20 +1,3 @@
-// import React from "react";
-
-// const Navbar = () => {
-//   return (
-//     <div>
-//       <ul>
-//         <li>Home</li>
-//         <li>Products</li>
-//         <li>About</li>
-//       </ul>
-//       <button>Get Started</button>
-//     </div>
-//   );
-// };
-
-// export default Navbar;
-
 import {
   Disclosure,
   DisclosureButton,
@@ -31,6 +14,9 @@ import { useLocation } from "react-router";
 
 import ThemeToggle from "./ThemeToggle";
 
+import useWindowSize from "../hooks/useWindowSize";
+import { FaLaptop, FaMobileAlt, FaTabletAlt } from "react-icons/fa";
+
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Product", href: "/product" },
@@ -44,6 +30,8 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const { width } = useWindowSize();
+
   let location = useLocation();
   return (
     <Disclosure as="nav" className="dark:bg-gray-800">
@@ -111,6 +99,18 @@ export default function Navbar() {
               <BellIcon aria-hidden="true" className="size-6" />
             </button>
 
+            {/* Based on screen size, display different device icons */}
+            <div className="flex items-center justify-end max-w-6xl mx-auto ml-2">
+              {width < 768 ? (
+                <FaMobileAlt className="max-w-6xl size-6" />
+              ) : width < 992 ? (
+                <FaTabletAlt className="max-w-6xl size-6" />
+              ) : (
+                <FaLaptop className="max-w-6xl size-6" />
+              )}
+            </div>
+
+            {/* Theme Toggle */}
             <div className="flex items-center justify-end max-w-6xl mx-auto ml-2">
               <ThemeToggle />
             </div>
