@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getUserInfo } from "../api/api";
 
 const About = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const resp = await getUserInfo(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+      setUsers(resp);
+    }
+    fetchData();
+  }, []);
+
+  //console.log(users);
   return (
     <div>
       <header className="shadow-sm">
@@ -9,6 +23,13 @@ const About = () => {
         </div>
       </header>
       {/* <h1 className="text-2xl font-bold">About Page</h1> */}
+      <div>
+        <ul>
+          {users.map((data, ind) => {
+            return <li key={ind}>{data?.name}</li>;
+          })}
+        </ul>
+      </div>
     </div>
   );
 };
